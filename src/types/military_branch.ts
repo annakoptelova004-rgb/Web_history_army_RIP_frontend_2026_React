@@ -14,4 +14,7 @@ export interface MilitaryBranch {
   food: number
   image: string
   video: string
+  creatorId?: number
+  isCreator?: number
+  liked?: number
 }

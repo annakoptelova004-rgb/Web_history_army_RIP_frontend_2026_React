@@ -29,5 +29,8 @@ export function mapMilitaryBranchApi(
     video: item.video
       ? `${MEDIA_URL}/${item.video}`
       : '',
+      creatorId: item.creator_id,
+      isCreator: item.is_creator,
+      liked: item.liked,
   }
 }

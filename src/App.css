@@ -182,3 +182,64 @@
     border-right-color: var(--border);
   }
 }
+/* Форма авторизации */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.login-form .form-control {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-form .search-button {
+  width: 100%;
+}
+/* Красная кнопка авторизации */
+.login-form .login-button {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 20px;
+
+  background-color: #b91c1c;
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+  font: inherit;
+  font-size: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.login-form .login-button:hover,
+.login-form .login-button:focus {
+  background-color: #991b1b;
+  border: none;
+}
+
+.login-form .login-button:disabled {
+  background-color: #b91c1c;
+  opacity: 0.6;
+}
+/* Отдельный блок для кнопки входа */
+.login-form .login-button-wrapper {
+  display: block;
+  width: 100%;
+  padding-top: 30px;
+}
+
+.login-form .login-button-wrapper .login-button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 14px 20px;
+  background-color: #b91c1c;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+}

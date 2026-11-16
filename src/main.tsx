@@ -5,9 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import './styles/military_branch_styles.css'
 import App from './App.tsx'
+import { Provider } from 'react-redux'
+import { store } from './store/military_branch_store'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+   <Provider store={store}>
+  <App />
+</Provider>
   </StrictMode>,
 )

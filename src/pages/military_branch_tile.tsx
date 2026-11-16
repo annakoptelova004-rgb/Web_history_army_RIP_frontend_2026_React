@@ -1,33 +1,51 @@
 
-import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-
+import {
+  fetchMilitaryBranches,
+  deleteMilitaryBranch,
+} from '../slices/military_branches_thunks'
 import MilitaryBranchCard from '../components/military_branch_card'
 import MilitaryBranchSpeedFilter from '../components/military_branch_speed_filter'
 import type { MilitaryBranchOutletContext } from '../military_branch_app_layout'
 
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../store/military_branch_hooks'
+
+import {
+  setMinSpeed,
+  setSelectedSpeed,
+} from '../slices/military_branches_slice'
+
 function MilitaryBranchTile() {
-  const { branches, setBranches } =
-    useOutletContext<MilitaryBranchOutletContext>()
+ const { branches } =
+  useOutletContext<MilitaryBranchOutletContext>()
 
-  const [speed, setSpeed] = useState(1)
-  const [selectedSpeed, setSelectedSpeed] = useState<number | null>(null)
+  const dispatch = useAppDispatch()
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSelectedSpeed(speed)
-  }
+  const speed = useAppSelector(
+    (state) => state.militaryBranches.minSpeed
+  )
+const loading = useAppSelector(
+  (state) => state.militaryBranches.loading
+)
+  
+const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault()
 
-  const filteredBranches =
-    selectedSpeed === null
-      ? branches
-      : branches.filter((branch) => branch.speedPlain === selectedSpeed)
+  if (loading) return
 
-  const handleDelete = (id: number) => {
-    setBranches((previousBranches) =>
-      previousBranches.filter((branch) => branch.id !== id),
-    )
-  }
+  dispatch(setSelectedSpeed(speed))
+  dispatch(fetchMilitaryBranches(speed))
+}
+
+
+  const filteredBranches = branches
+
+ const handleDelete = (id: number) => {
+  dispatch(deleteMilitaryBranch(id))
+}
 
   return (
     <main className="page">
@@ -35,9 +53,15 @@ function MilitaryBranchTile() {
 
       <MilitaryBranchSpeedFilter
         speed={speed}
-        setSpeed={setSpeed}
+        setSpeed={(value) => dispatch(setMinSpeed(value))}
         onSubmit={handleSearch}
+        loading={loading}
       />
+        {loading && (
+          <p role="status" aria-live="polite">
+            Загрузка родов войск...
+          </p>
+        )}
 
       <section className="troops">
         {filteredBranches.map((branch) => (

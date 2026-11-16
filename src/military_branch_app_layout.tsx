@@ -1,12 +1,19 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import type { Dispatch, SetStateAction } from 'react'
 
 import MilitaryBranchNavigation from './components/military_branch_navigation'
-import { getMilitaryBranchesApi } from './data/military_branch_api'
-import { mapMilitaryBranchApi } from './data/military_branch_api_mapper'
+
 import type { MilitaryBranch } from './types/military_branch'
+
+import {
+  useAppDispatch,
+  useAppSelector,
+} from './store/military_branch_hooks'
+
+import { fetchMilitaryBranches } from './slices/military_branches_thunks'
+import { setBranches } from './slices/military_branches_slice'
 
 export interface MilitaryBranchOutletContext {
   branches: MilitaryBranch[]
@@ -14,24 +21,58 @@ export interface MilitaryBranchOutletContext {
 }
 
 function MilitaryBranchAppLayout() {
-  const [branches, setBranches] = useState<MilitaryBranch[]>([])
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    const loadBranches = async () => {
-      try {
-        const apiBranches = await getMilitaryBranchesApi()
-        setBranches(apiBranches.map(mapMilitaryBranchApi))
-      } catch (error) {
-        console.error('Не удалось загрузить рода войск:', error)
-      }
-    }
+const username = useAppSelector(
+  state => state.militaryBranchUser.username
+)
+const isAuthenticated = useAppSelector(
+  state => state.militaryBranchUser.isAuthenticated
+)
 
-    loadBranches()
-  }, [])
+  const branches = useAppSelector(
+    (state) => state.militaryBranches.branches
+  )
+
+  const loading = useAppSelector(
+    (state) => state.militaryBranches.loading
+  )
+
+ useEffect(() => {
+  dispatch(fetchMilitaryBranches())
+}, [dispatch, isAuthenticated])
+
+  const updateBranches: Dispatch<SetStateAction<MilitaryBranch[]>> = (
+    value
+  ) => {
+    const nextBranches =
+      typeof value === 'function'
+        ? value(branches)
+        : value
+
+    dispatch(setBranches(nextBranches))
+  }
 
   return (
     <div className="phone">
-      <Outlet context={{ branches, setBranches }} />
+      {username && (
+  <div className="user-info">
+    {username}
+  </div>
+)}
+      {loading && (
+        <div role="status">
+          Загрузка родов войск...
+        </div>
+      )}
+
+      <Outlet
+        context={{
+          branches,
+          setBranches: updateBranches,
+        }}
+      />
+
       <MilitaryBranchNavigation />
     </div>
   )

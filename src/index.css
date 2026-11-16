@@ -16,3 +16,119 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+.login-form .login-button-wrapper {
+  display: block;
+  width: 100%;
+  padding-top: 30px;
+}
+
+.login-form .login-button-wrapper .login-button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 6px 20px;
+  background-color: #ed1019;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.login-form .login-button:hover,
+.login-form .login-button:focus {
+  background-color: #ed1019;
+  border: none;
+}
+
+.login-form .login-button:disabled {
+  background-color: #ed1019;
+  opacity: 0.6;
+}
+
+.bottom-nav .nav-logout {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.bottom-nav .nav-logout:hover {
+  color: #dc3545;
+}
+
+.phone {
+  position: relative;
+}
+
+.user-info {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #ffffff;
+  font-size: 16px;
+  z-index: 10;
+}
+
+/* Страница добавления */
+.military-add-media {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.military-add-preview {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border: 2px solid #dc2626;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.military-add-preview img,
+.military-add-preview video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+.military-add-name {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  color: white;
+}
+
+.military-add-name input {
+  width: 100%;
+  height: 38px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: white;
+  color: black;
+  box-sizing: border-box;
+}
+
+.military-add-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.military-add-actions button {
+  padding: 5px 20px;
+  border: none;
+  border-radius: 7px;
+  background: #dc2626;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}

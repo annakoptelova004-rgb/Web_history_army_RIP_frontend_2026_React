@@ -1,4 +1,3 @@
-
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
@@ -37,12 +36,14 @@ function MilitaryBranchCard({
         </div>
       </Link>
 
-      <Button
-        className="delete-button"
-        onClick={() => onDelete(branch.id)}
-      >
-        УДАЛИТЬ
-      </Button>
+     {branch.isCreator === 1 && (
+  <Button
+    className="delete-button"
+    onClick={() => onDelete(branch.id)}
+  >
+    УДАЛИТЬ
+  </Button>
+)}
     </div>
   )
 }
